@@ -415,6 +415,81 @@ const blocks = [
 			open(script.getValue('WEBSITE', script));
 			return script.callReturn();
 		},
+	},
+	{
+		name: 'OpenUrlSafeMode',
+		template: '%1 사이트 열기(안전모드)%2',
+		skeleton: 'basic',
+		color: {
+			default: '#15b01a',
+			darken: '#15b01a'
+		},
+		params: [
+			{
+				type: 'Block',
+				accept: 'string'
+			},
+			{
+				type: 'Indicator',
+				img: 'block_icon/start_icon_play.svg',
+				size: 11,
+			}
+		],
+		def: [
+			{
+				type: 'text',
+				params: ['https://playentry.org']
+			},
+			null
+		],
+		map: {
+			WEBSITESAFEMODE: 0
+		},
+		class: 'text',
+		func: async (sprite, script) => {
+			if (confirm(script.getValue('WEBSITESAFEMODE', script) + ' 사이트를 열려 합니다. 여시겠습니까?')) {
+				open(script.getValue('WEBSITESAFEMODE', script));
+			}
+			else {
+				alert('사용자가 취소를 클릭하여 열기가 취소되었습니다.');
+			}
+			return script.callReturn();
+		},
+	},
+	{
+		name: 'SetPageTitle',
+		template: '페이지 제목을 %1로 바꾸기%2',
+		skeleton: 'basic',
+		color: {
+			default: '#15b01a',
+			darken: '#15b01a'
+		},
+		params: [
+			{
+				type: 'Block',
+				accept: 'string'
+			},
+			{
+				type: 'Indicator',
+				img: 'block_icon/start_icon_play.svg',
+				size: 11,
+			}
+		],
+		def: [
+			{
+				type: 'text',
+				params: ['엔트리']
+			},
+			null
+		],
+		map: {
+			PAGETITLE: 0
+		},
+		class: 'text',
+		func: async (sprite, script) => {
+			document.title = script.getValue('PAGETITLE', script);
+			return script.callReturn();
+		},
 	}
 ]
 LibraryCreator.start(blocks, 'API', 'Dino');
