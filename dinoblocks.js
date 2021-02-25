@@ -386,8 +386,8 @@ const blocks = [
 		template: '%1 사이트 열기(일반)%2',
 		skeleton: 'basic',
 		color: {
-			default: '#15b01a',
-			darken: '#15b01a'
+			default: '#00b6b1',
+			darken: '#00b6b1'
 		},
 		params: [
 			{
@@ -421,8 +421,8 @@ const blocks = [
 		template: '%1 사이트 열기(안전모드)%2',
 		skeleton: 'basic',
 		color: {
-			default: '#15b01a',
-			darken: '#15b01a'
+			default: '#00b6b1',
+			darken: '#00b6b1'
 		},
 		params: [
 			{
@@ -461,8 +461,8 @@ const blocks = [
 		template: '페이지 제목을 %1로 바꾸기%2',
 		skeleton: 'basic',
 		color: {
-			default: '#15b01a',
-			darken: '#15b01a'
+			default: '#00b6b1',
+			darken: '#00b6b1'
 		},
 		params: [
 			{
