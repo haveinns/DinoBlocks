@@ -478,7 +478,7 @@ const blocks = [
 		def: [
 			{
 				type: 'text',
-				params: ['Entry']
+				params: ['엔트리']
 			},
 			null
 		],
