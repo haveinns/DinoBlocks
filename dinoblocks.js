@@ -1,5 +1,3 @@
-
-
 const LibraryCreator = {
 	start: (blocksJSON, category, text) => {
 		let blockArray = new Array;
@@ -420,4 +418,4 @@ const blocks = [
 	}
 ]
 LibraryCreator.start(blocks, 'API', 'Dino');
-console.log('로딩이 완료되었습니다.')
+console.log('Dino 블럭은 아직 사용이 불가합니다.')
