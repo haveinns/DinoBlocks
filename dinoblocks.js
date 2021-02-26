@@ -382,7 +382,7 @@ const blocks = [
 		class: 'text'
 	},
 	{
-		name: 'OpenUrl',
+		name: 'dino_OpenUrl',
 		template: '%1 사이트 열기(일반)%2',
 		skeleton: 'basic',
 		color: {
@@ -417,7 +417,7 @@ const blocks = [
 		},
 	},
 	{
-		name: 'OpenUrlSafeMode',
+		name: 'dino_OpenUrlSafeMode',
 		template: '%1 사이트 열기(안전모드)%2',
 		skeleton: 'basic',
 		color: {
@@ -457,7 +457,7 @@ const blocks = [
 		},
 	},
 	{
-		name: 'SetPageTitle',
+		name: 'dino_SetPageTitle',
 		template: '페이지 제목을 %1로 바꾸기%2',
 		skeleton: 'basic',
 		color: {
