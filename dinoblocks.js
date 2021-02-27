@@ -739,6 +739,40 @@ const dinoblockcodes = [
 		},
 	},
 	{
+		name: 'dino_admintf',
+		template: "%1 유저는 admin계의 계정인가? (영자님이 admin)",
+		skeleton: 'basic_boolean_field',
+		color: {
+			default: '#00B6B1',
+			darken: '#00B6B1'
+		},
+		params: [
+			{
+				type: 'Block',
+				accept: 'string'
+			}
+		],
+		def: [
+			{
+				type: 'text',
+				params: ['entry']
+			}
+		],
+		map: {
+			USERBLOCKEDNAMEVAR: 0
+		},
+		class: 'text',
+		func: async (sprite, script) => {
+			let yzres = await fetch('https://playentry.org/api/getUserByusername/' + script.getValue('USERBLOCKEDNAMEVAR', script));
+			let yzdata = await yzres.json();
+			if (yzdata.role == "admin") {
+				return true;
+			} else {
+				return false;
+			}
+		},
+	},
+	{
 		name: 'dino_FindUserDes',
 		template: '%1 유저의 설명',
 		skeleton: 'basic_string_field',
