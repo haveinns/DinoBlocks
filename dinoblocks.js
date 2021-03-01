@@ -1513,4 +1513,18 @@ const dinoblockcodes = [
 	},
 ]
 DinoBlocksLIB.start(dinoblockcodes, 'API', 'Dino');
-console.log("dinoblocks v1.0")
+async function DinoBlockLoad() {
+	if(Entry.getMainWS() && Entry.projectId) {
+		const TempProjectId = Entry.projectId;
+		const ExportedProject = Entry.exportProject();
+		const ProjectData = await (await fetch(`https://playentry.org/api/project/${Entry.projectId}`)).json();
+		Entry.clearProject();
+		Entry.loadProject(Object.keys(ExportedProject).reduce((acc, cur) => {
+			acc[cur] = ProjectData[cur];
+			return acc;
+		}, {}));
+		Entry.projectId = TempProjectId;
+	}
+    console.log("DinoBlocks v1.2")
+}
+DinoBlockLoad();
