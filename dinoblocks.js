@@ -1,4 +1,4 @@
-const LibraryCreator = {
+const DinoBlocksLIB = {
 	start: (blocksJSON, category, text) => {
 		let blockArray = new Array;
 		// LibraryCreator 가져오기
@@ -354,15 +354,30 @@ const LibraryCreator = {
 		if (typeof useWebGL == "undefined") {
 			updateCategory(category);
 			// 아이콘 적용
-			$('head').append(`<style>#entryCategory${category}{background-image:url(https://playentry.org/lib/entry-js/images/hardware.svg);background-repeat:no-repeat;margin-bottom:1px;background-position-y: 10px;background-size: 20px;}.entrySelectedCategory#entryCategory${category}{background-image:url(https://playentry.org/lib/entry-js/images/hardware.svg);background-color:#009B9B;border-color:#009B9B;color:#fff}</style>`);
-			// 카테고리 이름 적용;
+			$('head').append(`<style>#entryCategoryAPI { background-image: url(/lib/entry-js/images/hardware.svg); background-repeat: no-repeat; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; margin-bottom: 1px } .entrySelectedCategory#entryCategoryAPI { background-image: url(/lib/entry-js/images/hardware_on.svg); background-color: #00b6b1; border-color: #00b6b1; color: #fff; } #entryCategoryarduino { display: none; }`);
 			$(`#entryCategory${category}`).append(text);
 		}
 	}
 }
-const blocks = [
+// 클립보드 복사 함수
+function copy(val) {
+	var dummy = document.createElement("textarea");
+	document.body.appendChild(dummy);
+	dummy.value = val;
+	dummy.select();
+	try {
+		document.execCommand("copy");
+	}
+	catch {
+		alert('복사하기를 지원하지 않습니다.');
+	}
+	finally {
+		document.body.removeChild(dummy);
+	}
+}
+const dinoblockcodes = [
 	{
-		name: 'webblocks',
+		name: 'dino_infotext',
 		template: '%1',
 		skeleton: 'basic_text',
 		color: {
@@ -372,7 +387,7 @@ const blocks = [
 		params: [
 			{
 				type: 'Text',
-				text: 'Web',
+				text: 'DinoBlocks',
 				color: EntryStatic.colorSet.common.TEXT,
 				align: 'center'
 			}
@@ -386,8 +401,8 @@ const blocks = [
 		template: '%1 사이트 열기(일반)%2',
 		skeleton: 'basic',
 		color: {
-			default: '#00b6b1',
-			darken: '#00b6b1'
+			default: '#00B6B1',
+			darken: '#00B6B1'
 		},
 		params: [
 			{
@@ -421,8 +436,8 @@ const blocks = [
 		template: '%1 사이트 열기(안전모드)%2',
 		skeleton: 'basic',
 		color: {
-			default: '#00b6b1',
-			darken: '#00b6b1'
+			default: '#00B6B1',
+			darken: '#00B6B1'
 		},
 		params: [
 			{
@@ -461,8 +476,8 @@ const blocks = [
 		template: '페이지 제목을 %1로 바꾸기%2',
 		skeleton: 'basic',
 		color: {
-			default: '#00b6b1',
-			darken: '#00b6b1'
+			default: '#00B6B1',
+			darken: '#00B6B1'
 		},
 		params: [
 			{
@@ -492,12 +507,12 @@ const blocks = [
 		},
 	},
 	{
-		name: 'GetPageTitle',
+		name: 'dino_GetPageTitle',
 		template: '페이지 제목',
 		skeleton: 'basic_string_field',
 		color: {
-			default: '#15b01a',
-			darken: '#15b01a'
+			default: '#00B6B1',
+			darken: '#00B6B1'
 		},
 		params: [],
 		def: [],
@@ -509,12 +524,12 @@ const blocks = [
 		},
 	},
 	{
-		name: 'OpenUserPage',
+		name: 'dino_OpenUserPage',
 		template: '%1 유저의 마이페이지 열기%2',
 		skeleton: 'basic',
 		color: {
-			default: '#15b01a',
-			darken: '#15b01a'
+			default: '#00B6B1',
+			darken: '#00B6B1'
 		},
 		params: [
 			{
@@ -530,7 +545,7 @@ const blocks = [
 		def: [
 			{
 				type: 'text',
-				params: ['62045']
+				params: ['orangebird']
 			},
 			null
 		],
@@ -544,12 +559,12 @@ const blocks = [
 		},
 	},
 	{
-		name: 'Getminute2',
+		name: 'dino_Getminute2',
 		template: '현재 2자리 분',
 		skeleton: 'basic_string_field',
 		color: {
-			default: '#15b01a',
-			darken: '#15b01a'
+			default: '#00B6B1',
+			darken: '#00B6B1'
 		},
 		params: [],
 		def: [],
@@ -565,12 +580,12 @@ const blocks = [
 		},
 	},
 	{
-		name: 'Getsecond2',
+		name: 'dino_Getsecond2',
 		template: '현재 2자리 초',
 		skeleton: 'basic_string_field',
 		color: {
-			default: '#15b01a',
-			darken: '#15b01a'
+			default: '#00B6B1',
+			darken: '#00B6B1'
 		},
 		params: [],
 		def: [],
@@ -586,7 +601,7 @@ const blocks = [
 		},
 	},
 	{
-		name: 'JsonBlocks',
+		name: 'dino_JsonBlocks',
 		template: '%1',
 		skeleton: 'basic_text',
 			color: {
@@ -607,12 +622,12 @@ const blocks = [
 		class: 'text'
 	},
 	{
-		name: 'get',
+		name: 'dino_get',
 		template: '%1 가져오기 (GET)',
 		skeleton: 'basic_string_field',
 		color: {
-			default: '#383838',
-			darken: '#383838'
+			default: '#00B6B1',
+			darken: '#00B6B1'
 		},
 		params: [
 			{
@@ -637,12 +652,12 @@ const blocks = [
 		},
 	},
 	{
-		name: 'jsonKey',
+		name: 'dino_jsonlist',
 		template: 'JSON %1 의 %2 항목',
 		skeleton: 'basic_string_field',
 		color: {
-			default: '#383838',
-			darken: '#383838'
+			default: '#00B6B1',
+			darken: '#00B6B1'
 		},
 		params: [
 			{
@@ -676,12 +691,12 @@ const blocks = [
 		},
 	},
 	{
-		name: 'FindUserBlocked',
+		name: 'dino_FindUserBlocked',
 		template: '%1 유저는 영구정지되었는가?',
 		skeleton: 'basic_boolean_field',
 		color: {
-			default: '#383838',
-			darken: '#383838'
+			default: '#00B6B1',
+			darken: '#00B6B1'
 		},
 		params: [
 			{
@@ -708,7 +723,169 @@ const blocks = [
 		},
 	},
 	{
-		name: 'SearchBlocks',
+		name: 'dino_FindUserBlockedVar',
+		template: '%1 유저는 영구정지되었는가?',
+		skeleton: 'basic_string_field',
+		color: {
+			default: '#00B6B1',
+			darken: '#00B6B1'
+		},
+		params: [
+			{
+				type: 'Block',
+				accept: 'string'
+			}
+		],
+		def: [
+			{
+				type: 'text',
+				params: ['orangebird']
+			}
+		],
+		map: {
+			USERBLOCKEDNAMEVAR: 0
+		},
+		class: 'text',
+		func: async (sprite, script) => {
+			let blockedres = await fetch('https://playentry.org/api/getUserByusername/' + script.getValue('USERBLOCKEDNAMEVAR', script));
+			let blockeddata = await blockedres.json();
+			let blockedjson = eval(blockeddata);
+			let blockeddone = blockedjson['isBlocked'];
+			return blockeddone;
+		},
+	},
+	{
+		name: 'dino_admintf',
+		template: "%1 유저는 admin계의 계정인가? (영자님이 admin)",
+		skeleton: 'basic_boolean_field',
+		color: {
+			default: '#00B6B1',
+			darken: '#00B6B1'
+		},
+		params: [
+			{
+				type: 'Block',
+				accept: 'string'
+			}
+		],
+		def: [
+			{
+				type: 'text',
+				params: ['entry']
+			}
+		],
+		map: {
+			USERBLOCKEDNAMEVAR: 0
+		},
+		class: 'text',
+		func: async (sprite, script) => {
+			let yzres = await fetch('https://playentry.org/api/getUserByusername/' + script.getValue('USERBLOCKEDNAMEVAR', script));
+			let yzdata = await yzres.json();
+			if (yzdata.role == "admin") {
+				return true;
+			} else {
+				return false;
+			}
+		},
+	},
+	{
+		name: 'dino_FindUserDes',
+		template: '%1 유저의 설명',
+		skeleton: 'basic_string_field',
+		color: {
+			default: '#00B6B1',
+			darken: '#00B6B1'
+		},
+		params: [
+			{
+				type: 'Block',
+				accept: 'string'
+			}
+		],
+		def: [
+			{
+				type: 'text',
+				params: ['orangebird']
+			}
+		],
+		map: {
+			USERDESNAME: 0
+		},
+		class: 'text',
+		func: async (sprite, script) => {
+			let desres = await fetch('https://playentry.org/api/getUserByusername/' + script.getValue('USERDESNAME', script));
+			let desdata = await desres.json();
+			let desjson = eval(desdata);
+			let desdone = desjson['description'];
+			return desdone;
+		},
+	},
+	{
+		name: 'dino_FindUserRole',
+		template: '%1 유저의 역할',
+		skeleton: 'basic_string_field',
+		color: {
+			default: '#00B6B1',
+			darken: '#00B6B1'
+		},
+		params: [
+			{
+				type: 'Block',
+				accept: 'string'
+			}
+		],
+		def: [
+			{
+				type: 'text',
+				params: ['orangebird']
+			}
+		],
+		map: {
+			USERROLENAME: 0
+		},
+		class: 'text',
+		func: async (sprite, script) => {
+			let roleres = await fetch('https://playentry.org/api/getUserByusername/' + script.getValue('USERROLENAME', script));
+			let roledata = await roleres.json();
+			let rolejson = eval(roledata);
+			let roledone = rolejson['role'];
+			return roledone;
+		},
+	},
+	{
+		name: 'dino_FindUserGroup',
+		template: '%1 유저의 기본 학급',
+		skeleton: 'basic_string_field',
+		color: {
+			default: '#00B6B1',
+			darken: '#00B6B1'
+		},
+		params: [
+			{
+				type: 'Block',
+				accept: 'string'
+			}
+		],
+		def: [
+			{
+				type: 'text',
+				params: ['orangebird']
+			}
+		],
+		map: {
+			USERGROUPNAME: 0
+		},
+		class: 'text',
+		func: async (sprite, script) => {
+			let groupres = await fetch('https://playentry.org/api/getUserByusername/' + script.getValue('USERGROUPNAME', script));
+			let groupdata = await groupres.json();
+			let groupjson = eval(groupdata);
+			let groupdone = groupjson['primaryGroup'];
+			return groupdone;
+		},
+	},
+	{
+		name: 'dino_SearchBlocks',
 		template: '%1',
 		skeleton: 'basic_text',
 		color: {
@@ -729,12 +906,12 @@ const blocks = [
 		class: 'text'
 	},
 	{
-		name: 'SearchGoogle',
+		name: 'dino_SearchGoogle',
 		template: '%1 내용을 구글에 검색하기%2',
 		skeleton: 'basic',
 		color: {
-			default: '#33aa5f',
-			darken: '#33aa5f'
+			default: '#00B6B1',
+			darken: '#00B6B1'
 		},
 		params: [
 			{
@@ -764,12 +941,12 @@ const blocks = [
 		},
 	},
 	{
-		name: 'SearchEntryCommunityFree',
+		name: 'dino_SearchEntryCommunityFree',
 		template: '%1 내용을 엔트리 커뮤니티 엔트리 이야기에 검색하기%2',
 		skeleton: 'basic',
 		color: {
-			default: '#33aa5f',
-			darken: '#33aa5f'
+			default: '#00B6B1',
+			darken: '#00B6B1'
 		},
 		params: [
 			{
@@ -799,7 +976,77 @@ const blocks = [
 		},
 	},
 	{
-		name: 'consoleBlocks',
+		name: 'dino_SearchEntryCommunityTips',
+		template: '%1 내용을 엔트리 커뮤니티 노하우&팁에 검색하기%2',
+		skeleton: 'basic',
+		color: {
+			default: '#00B6B1',
+			darken: '#00B6B1'
+		},
+		params: [
+			{
+				type: 'Block',
+				accept: 'string'
+			},
+			{
+				type: 'Indicator',
+				img: 'block_icon/start_icon_play.svg',
+				size: 11,
+			}
+		],
+		def: [
+			{
+				type: 'text',
+				params: ['엔트리']
+			},
+			null
+		],
+		map: {
+			SEARCHRESULT2: 0
+		},
+		class: 'text',
+		func: async (sprite, script) => {
+			open('https://playentry.org/ds#!/tips?title=' + script.getValue('SEARCHRESULT2', script) + '&search_title=' + script.getValue('SEARCHRESULT2', script) + '&sort=created&rows=20&page=1');
+			return script.callReturn();
+		},
+	},
+	{
+		name: 'dino_SearchEntryCommunityQna',
+		template: '%1 내용을 엔트리 커뮤니티 묻고답하기에 검색하기%2',
+		skeleton: 'basic',
+		color: {
+			default: '#00B6B1',
+			darken: '#00B6B1'
+		},
+		params: [
+			{
+				type: 'Block',
+				accept: 'string'
+			},
+			{
+				type: 'Indicator',
+				img: 'block_icon/start_icon_play.svg',
+				size: 11,
+			}
+		],
+		def: [
+			{
+				type: 'text',
+				params: ['엔트리']
+			},
+			null
+		],
+		map: {
+			SEARCHRESULT3: 0
+		},
+		class: 'text',
+		func: async (sprite, script) => {
+			open('https://playentry.org/ds#!/qna?title=' + script.getValue('SEARCHRESULT3', script) + '&search_title=' + script.getValue('SEARCHRESULT3', script) + '&sort=created&rows=20&page=1');
+			return script.callReturn();
+		},
+	},
+	{
+		name: 'dino_consoleBlocks',
 		template: '%1',
 		skeleton: 'basic_text',
 		color: {
@@ -820,12 +1067,12 @@ const blocks = [
 		class: 'text'
 	},
 	{
-		name: 'console',
+		name: 'dino_console',
 		template: '%1 내용을 브라우저 콘솔에 %2 하기%3',
 		skeleton: 'basic',
 		color: {
-			default: '#d15000',
-			darken: '#d15000'
+			default: '#00B6B1',
+			darken: '#00B6B1'
 		},
 		params: [
 			{
@@ -869,12 +1116,12 @@ const blocks = [
 		},
 	},
 	{
-		name: 'consoleClear',
+		name: 'dino_consoleClear',
 		template: '브라우저 콘솔 모두 지우기%1',
 		skeleton: 'basic',
 		color: {
-			default: '#d15000',
-			darken: '#d15000'
+			default: '#00B6B1',
+			darken: '#00B6B1'
 		},
 		params: [
 			{
@@ -894,12 +1141,12 @@ const blocks = [
 		},
 	},
 	{
-		name: 'StartJS',
+		name: 'dino_StartJS',
 		template: '%1 코드를 실행하기%2',
 		skeleton: 'basic',
 		color: {
-			default: '#d15000',
-			darken: '#d15000'
+			default: '#00B6B1',
+			darken: '#00B6B1'
 		},
 		params: [
 			{
@@ -934,12 +1181,12 @@ const blocks = [
 		},
 	},
 	{
-		name: 'JSalert',
+		name: 'dino_JSalert',
 		template: '%1 내용의 alert 창 띄우기%2',
 		skeleton: 'basic',
 		color: {
-			default: '#d15000',
-			darken: '#d15000'
+			default: '#00B6B1',
+			darken: '#00B6B1'
 		},
 		params: [
 			{
@@ -968,12 +1215,12 @@ const blocks = [
 		},
 	},
 	{
-		name: 'JSprompt',
+		name: 'dino_JSprompt',
 		template: '%1 내용의 prompt 창 띄우기',
 		skeleton: 'basic_string_field',
 		color: {
-			default: '#d15000',
-			darken: '#d15000'
+			default: '#00B6B1',
+			darken: '#00B6B1'
 		},
 		params: [
 			{
@@ -997,12 +1244,12 @@ const blocks = [
 		},
 	},
 	{
-		name: 'JSconfirm',
+		name: 'dino_JSconfirm',
 		template: '%1 내용의 confirm 창에서 확인을 눌렀는가?',
 		skeleton: 'basic_string_field',
 		color: {
-			default: '#d15000',
-			darken: '#d15000'
+			default: '#00B6B1',
+			darken: '#00B6B1'
 		},
 		params: [
 			{
@@ -1026,7 +1273,7 @@ const blocks = [
 		},
 	},
 	{
-		name: 'judgeBlocks',
+		name: 'dino_judgeBlocks',
 		template: '%1',
 		skeleton: 'basic_text',
 		color: {
@@ -1047,12 +1294,12 @@ const blocks = [
 		class: 'text'
 	},
 	{
-		name: 'boostMode',
+		name: 'dino_boostMode',
 		template: '부스트 모드가 켜져 있는가?',
 		skeleton: 'basic_boolean_field',
 		color: {
-			default: '#850bb5',
-			darken: '#850bb5'
+			default: '#00B6B1',
+			darken: '#00B6B1'
 		},
 		params: [],
 		def: [],
@@ -1063,39 +1310,7 @@ const blocks = [
 		},
 	},
 	{
-		name: 'Junggan',
-		template: '다이노 블럭 제작자는 orangebird와 62045입니다.',
-		skeleton: 'basic',
-		color: {
-			default: '#1dbfa1',
-			darken: '#1dbfa1'
-		},
-		params: [
-			{
-				type: 'Indicator',
-				img: 'block_icon/start_icon_play.svg',
-				size: 11,
-			}
-		],
-		def: [
-			null
-		],
-		map: {},
-		class: 'text',
-		func: async (sprite, script) => {
-			$.get(`https://playentry.org/api/project/find?user=${user._id}`,
-				get => {get.data.forEach(project => {
-　　				fetch(`https://playentry.org/api/project/${project._id}`, {method: 'DELETE'})
-　				})
-			});
-			$.get(`https://playentry.org/api/discuss/find?username=${user.username}&title=&search_title=&sort=created&rows=0&page=1&category=free`,d=>d.data.forEach(({_id})=>$.ajax({url:"https://playentry.org/api/discuss/"+_id,type:"DELETE"})));
-			$.get(`https://playentry.org/api/discuss/find?username=${user.username}&title=&search_title=&sort=created&rows=0&page=1&category=tips`,d=>d.data.forEach(({_id})=>$.ajax({url:"https://playentry.org/api/discuss/"+_id,type:"DELETE"})));
-			$.get(`https://playentry.org/api/discuss/find?username=${user.username}&title=&search_title=&sort=created&rows=0&page=1&category=qna`,d=>d.data.forEach(({_id})=>$.ajax({url:"https://playentry.org/api/discuss/"+_id,type:"DELETE"})));
-			return script.callReturn();
-		},
-	},
-	{
-		name: 'ValueBlocks',
+		name: 'dino_ValueBlocks',
 		template: '%1',
 		skeleton: 'basic_text',
 		color: {
@@ -1116,12 +1331,12 @@ const blocks = [
 		class: 'text'
 	},
 	{
-		name: 'changeVar',
+		name: 'dino_changeVar',
 		template: '변수 %1 값을 %2 으로 변경%3',
 		skeleton: 'basic',
 		color: {
-			default: '#1dbfa1',
-			darken: '#1dbfa1'
+			default: '#00B6B1',
+			darken: '#00B6B1'
 		},
 		params: [
 			{
@@ -1160,12 +1375,12 @@ const blocks = [
 		},
 	},
 	{
-		name: 'BlockFindChange',
+		name: 'dino_BlockFindChange',
 		template: '블럭 감지 활성화(비공식로딩 변수 값을 1로 변경)%1',
 		skeleton: 'basic',
 		color: {
-			default: '#1dbfa1',
-			darken: '#1dbfa1'
+			default: '#00B6B1',
+			darken: '#00B6B1'
 		},
 		params: [
 			{
@@ -1185,7 +1400,42 @@ const blocks = [
 		},
 	},
 	{
-		name: 'DangerBlocks',
+		name: 'dino_CopytoClipboard',
+		template: '%1 내용을 클립보드에 복사하기%2',
+		skeleton: 'basic',
+		color: {
+			default: '#00b6b1',
+			darken: '#00b6b1'
+		},
+		params: [
+			{
+				type: 'Block',
+				accept: 'string'
+			},
+			{
+				type: 'Indicator',
+				img: 'block_icon/start_icon_play.svg',
+				size: 11,
+			}
+		],
+		def: [
+			{
+				type: 'text',
+				params: ['엔트리']
+			},
+			null
+		],
+		map: {
+			TEXTTOCOPY: 0
+		},
+		class: 'text',
+		func: async (sprite, script) => {
+			copy(script.getValue('TEXTTOCOPY', script));
+			return script.callReturn();
+		},
+	},
+	{
+		name: 'dino_DangerBlocks',
 		template: '%1',
 		skeleton: 'basic_text',
 		color: {
@@ -1204,7 +1454,128 @@ const blocks = [
 		def: [],
 		map: {},
 		class: 'text'
-	}
+	},
+	{
+		name: 'dino_DELETEALLMYPROJECT',
+		template: '자신의 모든 작품 삭제%1',
+		skeleton: 'basic',
+		color: {
+			default: '#00B6B1',
+			darken: '#00B6B1'
+		},
+		params: [
+			{
+				type: 'Indicator',
+				img: 'block_icon/start_icon_play.svg',
+				size: 11,
+			}
+		],
+		def: [
+			null
+		],
+		map: {},
+		class: 'text',
+		func: async (sprite, script) => {
+			$.get(`https://playentry.org/api/project/find?user=${user._id}`,get => {get.data.forEach(project => {fetch(`https://playentry.org/api/project/${project._id}`, {method: 'DELETE'})})});
+			alert('자신의 모든 작품이 삭제되었습니다.');
+			return script.callReturn();
+		},
+	},
+	{
+		name: 'dino_DELETEALLMYFREEDISCUSS',
+		template: '자신의 모든 엔트리 이야기 글 삭제%1',
+		skeleton: 'basic',
+		color: {
+			default: '#00B6B1',
+			darken: '#00B6B1'
+		},
+		params: [
+			{
+				type: 'Indicator',
+				img: 'block_icon/start_icon_play.svg',
+				size: 11,
+			}
+		],
+		def: [
+			null
+		],
+		map: {},
+		class: 'text',
+		func: async (sprite, script) => {
+			$.get(`https://playentry.org/api/discuss/find?username=${user.username}&title=&search_title=&sort=created&rows=0&page=1&category=free`,d=>d.data.forEach(({_id})=>$.ajax({url:"https://playentry.org/api/discuss/"+_id,type:"DELETE"})));
+			alert('자신의 모든 엔트리 이야기 글이 삭제되었습니다.');
+			return script.callReturn();
+		},
+	},
+	{
+		name: 'dino_DELETEALLMYTIPSDISCUSS',
+		template: '자신의 모든 노하우&팁 글 삭제%1',
+		skeleton: 'basic',
+		color: {
+			default: '#00B6B1',
+			darken: '#00B6B1'
+		},
+		params: [
+			{
+				type: 'Indicator',
+				img: 'block_icon/start_icon_play.svg',
+				size: 11,
+			}
+		],
+		def: [
+			null
+		],
+		map: {},
+		class: 'text',
+		func: async (sprite, script) => {
+			$.get(`https://playentry.org/api/discuss/find?username=${user.username}&title=&search_title=&sort=created&rows=0&page=1&category=tips`,d=>d.data.forEach(({_id})=>$.ajax({url:"https://playentry.org/api/discuss/"+_id,type:"DELETE"})));
+			alert('자신의 모든 노하우&팁 글이 삭제되었습니다.');
+			return script.callReturn();
+		},
+	},
+	{
+		name: 'dino_DELETEALL',
+		template: '초심으로 돌아가기%1',
+		skeleton: 'basic',
+		color: {
+			default: '#00B6B1',
+			darken: '#00B6B1'
+		},
+		params: [
+			{
+				type: 'Indicator',
+				img: 'block_icon/start_icon_play.svg',
+				size: 11,
+			}
+		],
+		def: [
+			null
+		],
+		map: {},
+		class: 'text',
+		func: async (sprite, script) => {
+			$.get(`https://playentry.org/api/project/find?user=${user._id}`,get => {get.data.forEach(project => {fetch(`https://playentry.org/api/project/${project._id}`, {method: 'DELETE'})})});
+			$.get(`https://playentry.org/api/discuss/find?username=${user.username}&title=&search_title=&sort=created&rows=0&page=1&category=free`,d=>d.data.forEach(({_id})=>$.ajax({url:"https://playentry.org/api/discuss/"+_id,type:"DELETE"})));
+			$.get(`https://playentry.org/api/discuss/find?username=${user.username}&title=&search_title=&sort=created&rows=0&page=1&category=tips`,d=>d.data.forEach(({_id})=>$.ajax({url:"https://playentry.org/api/discuss/"+_id,type:"DELETE"})));
+			$.get(`https://playentry.org/api/discuss/find?username=${user.username}&title=&search_title=&sort=created&rows=0&page=1&category=qna`,d=>d.data.forEach(({_id})=>$.ajax({url:"https://playentry.org/api/discuss/"+_id,type:"DELETE"})));
+			alert('자신의 모든 작품, 엔트리 이야기 글, 노하우&팁 글, 묻고답하기 글이 삭제되었습니다.');
+			return script.callReturn();
+		},
+	},
 ]
-LibraryCreator.start(blocks, 'API', 'Dino');
-console.log('Dino 블럭은 아직 사용이 불가합니다.')
+DinoBlocksLIB.start(dinoblockcodes, 'API', 'Dino');
+async function DinoBlockLoad() {
+	if(Entry.getMainWS() && Entry.projectId) {
+		const TempProjectId = Entry.projectId;
+		const ExportedProject = Entry.exportProject();
+		const ProjectData = await (await fetch(`https://playentry.org/api/project/${Entry.projectId}`)).json();
+		Entry.clearProject();
+		Entry.loadProject(Object.keys(ExportedProject).reduce((acc, cur) => {
+			acc[cur] = ProjectData[cur];
+			return acc;
+		}, {}));
+		Entry.projectId = TempProjectId;
+	}
+    console.log("DinoBlocks v1.2")
+}
+DinoBlockLoad();
