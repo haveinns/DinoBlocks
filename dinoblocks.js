@@ -359,6 +359,22 @@ const DinoBlocksLIB = {
 		}
 	}
 }
+// 클립보드 복사 함수
+function copy(val) {
+	var dummy = document.createElement("textarea");
+	document.body.appendChild(dummy);
+	dummy.value = val;
+	dummy.select();
+	try {
+		document.execCommand("copy");
+	}
+	catch {
+		alert('복사하기를 지원하지 않습니다.');
+	}
+	finally {
+		document.body.removeChild(dummy);
+	}
+}
 const dinoblockcodes = [
 	{
 		name: 'dino_infotext',
@@ -1380,6 +1396,41 @@ const dinoblockcodes = [
 		class: 'text',
 		func: async (sprite, script) => {
 			Entry.variableContainer.getVariableByName('비공식로딩').value_ = 1;
+			return script.callReturn();
+		},
+	},
+	{
+		name: 'dino_CopytoClipboard',
+		template: '%1 내용을 클립보드에 복사하기%2',
+		skeleton: 'basic',
+		color: {
+			default: '#00b6b1',
+			darken: '#00b6b1'
+		},
+		params: [
+			{
+				type: 'Block',
+				accept: 'string'
+			},
+			{
+				type: 'Indicator',
+				img: 'block_icon/start_icon_play.svg',
+				size: 11,
+			}
+		],
+		def: [
+			{
+				type: 'text',
+				params: ['엔트리']
+			},
+			null
+		],
+		map: {
+			TEXTTOCOPY: 0
+		},
+		class: 'text',
+		func: async (sprite, script) => {
+			copy(script.getValue('TEXTTOCOPY', script));
 			return script.callReturn();
 		},
 	},
