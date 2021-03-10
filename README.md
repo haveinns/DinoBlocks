@@ -1,6 +1,6 @@
 # DinoBlocks
 
-# 브렌치 충돌로 잠시 점검합니다. 블럭을 사용하실순 있지만, 업데이트는 3일 동안 되지 않습니다.
+# 엔트리 리뉴얼로 당분간 업데이트를 하지 않습니다.
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Forangebrd%2Fdinoblocks&count_bg=%23009B9B&title_bg=%23555555&icon=diaspora.svg&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
