@@ -885,6 +885,554 @@ const dinoblockcodes = [
 		},
 	},
 	{
+		name: 'ExpressBlock_EntryLogin',
+		template: '엔트리 계정 로그인하기 아이디 %1 비밀번호 %2 %3',
+		skeleton: 'basic',
+		color: {
+			default: '#383838',
+			darken: '#383838'
+		},
+		params: [
+			{
+				type: 'Block',
+				accept: 'string'
+			},
+			{
+				type: 'Block',
+				accept: 'string'
+			},
+			{
+				type: 'Indicator',
+				img: 'block_icon/start_icon_play.svg',
+				size: 11,
+			}
+		],
+		def: [
+			{
+				type: 'text',
+				params: ['ID']
+			},
+			{
+				type: 'text',
+				params: ['PW']
+			},
+			null
+		],
+		map: {
+			USERNAME: 0,
+			PASSWORD: 1
+		},
+		class: 'text',
+		func: async (sprite, script) => {
+			var username = script.getValue('USERNAME', script);
+			var password = script.getValue('PASSWORD', script);
+			var remember = false;
+			await fetch('https://playentry.org/graphql', {
+				method: 'POST',
+				headers: {
+					'content-type': 'application/json',
+				},
+				body: JSON.stringify({
+				query: `mutation(
+					$username: String!
+					$password: String!
+					$rememberme: Boolean
+					$captchaValue: String
+					$captchaKey: String
+					$captchaType: String
+				) {
+					signinByUsername(
+					username: $username
+					password: $password
+					rememberme: $rememberme
+					captchaValue: $captchaValue
+					captchaKey: $captchaKey
+					captchaType: $captchaType
+				) {
+					id
+					username
+					nickname
+					role
+					isEmailAuth
+					isSnsAuth
+					isPhoneAuth
+					studentTerm
+					status {
+						userStatus
+					}
+					profileImage {
+						id
+						name
+						label {
+							ko
+							en
+							ja
+							vn
+						}
+						filename
+						imageType
+						dimension {
+							width
+							height
+						}
+						trimmed {
+							filename
+							width
+							height
+						}
+					}
+					banned {
+						username
+						nickname
+						reason
+						bannedCount
+						bannedType
+						projectId
+						startDate
+						userReflect {
+							status
+							endDate
+						}
+					}
+					}
+				}
+				`,
+				variables: { username, password, rememberme: remember },
+				}),
+			});
+			return script.callReturn();
+		},
+	},
+	{
+		name: 'ExpressBlock_UserFollow',
+		template: '%1 id 유저를 팔로우하기 %2',
+		skeleton: 'basic',
+		color: {
+			default: '#383838',
+			darken: '#383838'
+		},
+		params: [
+			{
+				type: 'Block',
+				accept: 'string'
+			},
+			{
+				type: 'Indicator',
+				img: 'block_icon/start_icon_play.svg',
+				size: 11,
+			}
+		],
+		def: [
+			{
+				type: 'text',
+				params: ['609e57516614e402de674cb6']
+			},
+			null
+		],
+		map: {
+			USERNAMEFORFOLLOW: 0
+		},
+		class: 'text',
+		func: async (sprite, script) => {
+			var id = script.getValue('USERNAMEFORFOLLOW', script);
+			await fetch('https://playentry.org/graphql', {
+				method: 'POST',
+				headers: {
+					'content-type': 'application/json',
+				},
+				body: JSON.stringify({
+					query: `mutation FOLLOW($user: String) {
+					follow(user: $user) {
+						id
+						user {
+						id
+						username
+						nickname
+						profileImage {
+							id
+							name
+							label {
+							ko
+							en
+							ja
+							vn
+							__typename
+							}
+							filename
+							imageType
+							dimension {
+							width
+							height
+							__typename
+							}
+							trimmed {
+							filename
+							width
+							height
+							__typename
+							}
+							__typename
+						}
+						status {
+							following
+							follower
+							__typename
+						}
+						__typename
+						}
+						follow {
+						id
+						username
+						nickname
+						profileImage {
+							id
+							name
+							label {
+							ko
+							en
+							ja
+							vn
+							__typename
+							}
+							filename
+							imageType
+							dimension {
+							width
+							height
+							__typename
+							}
+							trimmed {
+							filename
+							width
+							height
+							__typename
+							}
+							__typename
+						}
+						status {
+							following
+							follower
+							__typename
+						}
+						__typename
+						}
+						__typename
+					}
+					}
+					`,
+					operationName: 'FOLLOW',
+					variables: {
+					user: id,
+					},
+				}),
+			});
+			return script.callReturn();
+		}
+	},
+	{
+		name: 'ExpressBlock_UsernameToID',
+		template: '%1 유저네임의 ID',
+		skeleton: 'basic_string_field',
+		color: {
+			default: '#383838',
+			darken: '#383838'
+		},
+		params: [
+			{
+				type: 'Block',
+				accept: 'string'
+			}
+		],
+		def: [
+			{
+				type: 'text',
+				params: ['entry62045']
+			}
+		],
+		map: {
+			USERNAMETOID: 0
+		},
+		class: 'text',
+		func: async (sprite, script) => {
+			var username = script.getValue('USERNAMETOID', script);
+			var id = (await (await fetch('https://playentry.org/graphql', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					query: `
+						query ($username: String) {
+							user(username: $username) {
+								id
+							}
+						}
+					`,
+					variables: { username: username }
+				})
+			})).json()).data.user.id;
+			return id;
+		},
+	},
+	{
+		name: 'ExpressBlock_NicknameToID',
+		template: '%1 닉네임의 ID',
+		skeleton: 'basic_string_field',
+		color: {
+			default: '#383838',
+			darken: '#383838'
+		},
+		params: [
+			{
+				type: 'Block',
+				accept: 'string'
+			}
+		],
+		def: [
+			{
+				type: 'text',
+				params: ['62045']
+			}
+		],
+		map: {
+			NICKNAMETOID: 0
+		},
+		class: 'text',
+		func: async (sprite, script) => {
+			var nickname = script.getValue('NICKNAMETOID', script);
+			var id = (await (await fetch('https://playentry.org/graphql', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					query: `
+						query ($nickname: String) {
+							user(nickname: $nickname) {
+								id
+							}
+						}
+					`,
+					variables: { nickname: nickname }
+				})
+			})).json()).data.user.id;
+			return id;
+		},
+	},
+	{
+		name: 'ExpressBlock_RecentFollowId',
+		template: '%1 id 유저의 마지막으로 팔로우 한 유저',
+		skeleton: 'basic_string_field',
+		color: {
+			default: '#383838',
+			darken: '#383838'
+		},
+		params: [
+			{
+				type: 'Block',
+				accept: 'string'
+			},
+			{
+				type: 'Block',
+				accept: 'string'
+			}
+		],
+		def: [
+			{
+				type: 'text',
+				params: [`10`]
+			}
+		],
+		map: {
+			USERNAMEFORRECENTFOLLOW: 0
+		},
+		class: 'text',
+		func: async (sprite, script) => {
+			let user = script.getValue("USERNAMEFORRECENTFOLLOW", script);
+			let id = (await (await fetch("https://playentry.org/graphql", {
+				method: 'POST',
+				headers: {
+					'content-type': 'application/json'
+				},
+				body: JSON.stringify({
+				query: `
+				query SELECT_FOLLOWINGS($user: String, $pageParam: PageParam, $searchAfter: JSON){
+				followings(user: $user, pageParam: $pageParam, searchAfter: $searchAfter) {
+				searchAfter
+				list {
+				id
+				follow {
+				id
+				username
+				nickname
+				profileImage {
+				id
+				name
+				label {
+				ko
+				en
+				ja
+				vn
+				}
+				filename
+				imageType
+				dimension {
+				width
+				height
+				}
+				trimmed {
+				filename
+				width
+				height
+				}
+				}
+				status {
+				following
+				follower
+				}
+				isFollow
+				projects {
+				id
+				thumb
+				name
+				}
+				}
+				}
+				}
+				}
+				`,
+				variables: { user: user, pageParam: { display: 8 }}
+				})
+			})).json()).data.followings.list[0].follow.id;
+			return id;
+		},
+	},
+	{
+		name: 'ExpressBlock_UserUnFollow',
+		template: '%1 id 유저를 언팔로우하기 %2',
+		skeleton: 'basic',
+		color: {
+			default: '#383838',
+			darken: '#383838'
+		},
+		params: [
+			{
+				type: 'Block',
+				accept: 'string'
+			},
+			{
+				type: 'Indicator',
+				img: 'block_icon/start_icon_play.svg',
+				size: 11,
+			}
+		],
+		def: [
+			{
+				type: 'text',
+				params: ['10']
+			},
+			null
+		],
+		map: {
+			USERNAMEFORUNFOLLOW: 0
+		},
+		class: 'text',
+		func: async (sprite, script) => {
+			let user = script.getValue('USERNAMEFORUNFOLLOW', script);
+			await fetch('https://playentry.org/graphql', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+				query: `
+					mutation UNFOLLOW ($user: String) {
+						unfollow(user: $user) {
+							id
+							id
+							user {
+								id
+								username
+								nickname
+								profileImage {
+									id
+									name
+									label {
+										ko
+										en
+										ja
+										vn
+									}
+									filename
+									imageType
+									dimension {
+										width
+										height
+									}
+									trimmed {
+										filename
+										width
+										height
+									}
+								}
+								status {
+									following
+									follower
+								}
+								isFollow
+								projects {
+									id
+									thumb
+									name
+								}
+							}
+							id
+							follow {
+								id
+								username
+								nickname
+								profileImage {
+									id
+									name
+									label {
+										ko
+										en
+										ja
+										vn
+									}
+									filename
+									imageType
+									dimension {
+										width
+										height
+									}
+									trimmed {
+										filename
+										width
+										height
+									}
+								}
+								status {
+									following
+									follower
+								}
+								isFollow
+								projects {
+									id
+									thumb
+									name
+								}
+							}
+						}
+					}
+				`,
+				variables: { user: user }
+				})
+			});
+			return script.callReturn();
+		}
+	},
+	{
 		name: 'dino_SearchBlocks',
 		template: '%1',
 		skeleton: 'basic_text',
